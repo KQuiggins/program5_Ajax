@@ -4,9 +4,67 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+
+      <!-- bootstrap, need to use https for these links -->
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+      <link rel="stylesheet" href="styles.css">
+      
+      
+    <title>Ajax Requests</title>
 </head>
 <body>
-    <h1>Hello World</h1>
+    <div id="head">
+        <h1 class="text-primary">Select a Major</h1>
+    </div>
+    
+    <div class="text-center" id="btn">
+        <button class="btn btn-primary" id="cit" onClick="getData('CIT')">CIT Majors</button>
+        <button class="btn btn-primary" id="bus" onClick="getData('BUS')">Business Majors</button>
+    </div>
+
+    <div id="para">
+        <p>Filtering Ajax request data</p>
+
+        
+    </div>
+
+    <div id="display"></div>
+    
+    <script id="text-template" type="text/x-handlebars-template">
+        <tr><th>Name</th><th>Major</th><th>Midterm</th><th>Final</th></tr>
+             {{#each rows}}
+                <tr>
+                     <td>{{name}}</td><td>{{major}}</td><td>{{midterm}}</td><td>{{final}}</td>
+                </tr>
+             {{/each}}
+    </script>
+    <script type="text/javascript">
+        document.onload = function(){
+            async function getData(major) {
+                let response = await fetch('cit5students.json');
+
+                if (response.ok) {
+                    let data = await response.json();
+                        console.log(data);
+                    majorData = data.filter(student => student.major === major);
+                    console.log(majorData);
+
+                    let template = document.getElementById('text-template').innerHTML;
+                    let compiled = Handlebars.compile(template);
+                    let generatedHTML = compiled({rows: majorData});
+                    document.getElementById('display').innerHTML = generatedHTML;
+                
+                } 
+                else {
+                    document.querySelector('#display').innerHTML = "Error: " + response.status;
+                }
+        
+            }
+        }
+    </script>
+    <script src="app.js"></script> 
 </body>
 </html>

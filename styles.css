@@ -1,0 +1,28 @@
+body{
+    background-color: #000;
+    color: #fff;
+    
+}
+
+#head{
+    text-align: center;
+    margin-top: 30px;
+}
+
+#btn{
+    margin-top: 30px;
+   
+}
+
+#cit{
+    margin-right: 10px;
+}
+
+#para{
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 30px;
+    width: 350px;
+   
+}
