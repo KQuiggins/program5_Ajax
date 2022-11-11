@@ -34,37 +34,17 @@
     <div id="display"></div>
     
     <script id="text-template" type="text/x-handlebars-template">
+        <table class="table table-bordered">
         <tr><th>Name</th><th>Major</th><th>Midterm</th><th>Final</th></tr>
              {{#each rows}}
                 <tr>
                      <td>{{name}}</td><td>{{major}}</td><td>{{midterm}}</td><td>{{final}}</td>
                 </tr>
+        
              {{/each}}
+            </table>
     </script>
-    <script type="text/javascript">
-        
-            async function getData(major) {
-                let response = await fetch('cit5students.json');
-
-                if (response.ok) {
-                    let data = await response.json();
-                        console.log(data);
-                    majorData = data.filter(student => student.major === major);
-                    console.log(majorData);
-
-                    let template = document.getElementById('text-template').innerHTML;
-                    let compiled = Handlebars.compile(template);
-                    let generatedHTML = compiled({rows: majorData});
-                    document.getElementById('display').innerHTML = generatedHTML;
-                
-                } 
-                else {
-                    document.querySelector('#display').innerHTML = "Error: " + response.status;
-                }
-        
-            }
-        
-    </script>
+    
     <script src="app.js"></script> 
 </body>
 </html>
